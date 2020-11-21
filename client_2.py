@@ -1,22 +1,20 @@
 import pygame
+import os
 import socket
 import threading
-import os
 from grid import Grid
 
-os.environ['SDL_VIDEO_WINDOW_POS'] = '850,100'  # screen display position
+os.environ['SDL_VIDEO_WINDOW_POS'] = '200,100'  # screen display position
 screen = pygame.display.set_mode((600, 600))
 pygame.display.set_caption("Tic-tac-toe")
 grid = Grid()
-client_multi_socket = socket.socket()
-
-player = "O"
-turn = False
+player = "X"
+turn = True
 playing = "True"
+client_multi_socket = socket.socket()
 
 host = "localhost"
 port = 8080
-
 
 print('Waiting for connection response')
 try:
@@ -44,7 +42,7 @@ def receive_data():
             if data[3] == 'False':
                 grid.game_over = True
             if grid.get_cell_value(posx, posy) == 0:
-                grid.set_cell_value(posx, posy, 'X')
+                grid.set_cell_value(posx, posy, 'O')
         except socket.error as e:
             str(e)
 
